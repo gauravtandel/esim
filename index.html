@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eSIM Data Usage Checker</title>
+    <!-- Use Tailwind CSS for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles can be added here if needed, but Tailwind classes are preferred. */
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center font-sans p-4">
+
+    <!-- Main container for the card -->
+    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full text-center">
+        <!-- Website Title -->
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">eSIM Data Usage Checker</h1>
+        <!-- Description in Hindi as per the request -->
+        <p class="text-gray-600 mb-6">अपने ICCID कोड का उपयोग करके अपने eSIM के डेटा उपयोग की जाँच करें।</p>
+
+        <!-- Input field for ICCID code -->
+        <div class="mb-4">
+            <input
+                id="iccid-input"
+                type="text"
+                placeholder="ICCID कोड एंटर करें"
+                class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg transition-all"
+            />
+        </div>
+
+        <!-- Button to trigger the check -->
+        <button
+            id="check-button"
+            class="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:bg-blue-700 transition-all text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+            डेटा उपयोग की जाँच करें
+        </button>
+
+        <!-- Message area for displaying status or errors -->
+        <p id="status-message" class="mt-4 text-sm text-gray-500"></p>
+    </div>
+
+    <script>
+        // Get references to the input and button elements
+        const iccidInput = document.getElementById('iccid-input');
+        const checkButton = document.getElementById('check-button');
+        const statusMessage = document.getElementById('status-message');
+
+        // Add a click event listener to the button
+        checkButton.addEventListener('click', () => {
+            // Get the value from the input field and remove leading/trailing whitespace
+            const iccidCode = iccidInput.value.trim();
+
+            // Check if the input is empty
+            if (iccidCode === '') {
+                statusMessage.textContent = 'कृपया ICCID कोड दर्ज करें।';
+                statusMessage.className = 'mt-4 text-sm text-red-500';
+                return; // Stop the function if the input is empty
+            }
+
+            // Construct the final URL with the user's ICCID code
+            // The URL provided by the user is used here.
+            const url = `https://cardinfo.gloableconnect.com/query/?key=${iccidCode}&token=zmjva2izki82po6e`;
+
+            // Open the URL in a new tab
+            window.open(url, '_blank');
+
+            // Provide a success message to the user
+            statusMessage.textContent = 'जांच की प्रक्रिया शुरू हो गई है। एक नई टैब में परिणाम देखें।';
+            statusMessage.className = 'mt-4 text-sm text-green-600';
+        });
+    </script>
+
+</body>
+</html>
